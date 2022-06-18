@@ -1,0 +1,96 @@
+
+entity Task {
+	title String,
+	description String,
+    numberOfTaskerRequired Integer,
+    budget BigDecimal,
+    startDate Instant,
+    status TaskStatus
+}
+
+entity TaskCategory {
+	name String,
+	description String
+}
+
+enum TaskStatus {
+    DONE, CANCELLED, WAITING_FOR_CANDIDATE, EXPIRED
+}
+
+
+entity Location {
+	streetAddress String,
+	postalCode String,
+	city String,
+	stateProvince String
+}
+
+entity Region {
+	regionName String
+}
+
+entity Country {
+	countryName String
+}
+
+/**
+ * The Tasker entity.
+ */
+entity Tasker {
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+	subscribedAt Instant,
+    licenseStatus LicenseStatus
+}
+
+
+/**
+ * The Tasker entity.
+ */
+entity Client {
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+	subscribedAt Instant,
+    licenseStatus LicenseStatus
+}
+
+
+enum LicenseStatus {
+    EXPIRED, VALID
+}
+
+relationship OneToOne {
+	Country{region} to Region
+    Location{country} to Country
+    Task{location} to Location
+    Tasker{Address} to Location
+    Client{Address} to Location
+    Task{taskCategory} to TaskCategory
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Tasker to Task{taskers}
+    TaskCategory to Tasker{taskCategories}
+    Task to Client{tasks}
+   
+}
+
+// Set pagination options
+paginate Tasker, Client with infinite-scroll
+paginate Task with pagination
+
+//Use Data Transfer Objects (DTO) 
+ dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
+    

@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-task-heading" data-cy="TaskCreateUpdateHeading" jhiTranslate="taskateApp.task.home.createOrEditLabel">
+        Create or edit a Task
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.numberOfTaskerRequired" for="field_numberOfTaskerRequired"
+            >Number Of Tasker Required</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfTaskerRequired"
+            id="field_numberOfTaskerRequired"
+            data-cy="numberOfTaskerRequired"
+            formControlName="numberOfTaskerRequired"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.budget" for="field_budget">Budget</label>
+          <input type="number" class="form-control" name="budget" id="field_budget" data-cy="budget" formControlName="budget" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.startDate" for="field_startDate">Start Date</label>
+          <div class="d-flex">
+            <input
+              id="field_startDate"
+              data-cy="startDate"
+              type="datetime-local"
+              class="form-control"
+              name="startDate"
+              formControlName="startDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'taskateApp.TaskStatus.null' | translate }}</option>
+            <option *ngFor="let taskStatus of taskStatusValues" [value]="taskStatus">
+              {{ 'taskateApp.TaskStatus.' + taskStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.location" for="field_location">Location</label>
+          <select class="form-control" id="field_location" data-cy="location" name="location" formControlName="location">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="locationOption.id === editForm.get('location')!.value?.id ? editForm.get('location')!.value : locationOption"
+              *ngFor="let locationOption of locationsCollection; trackBy: trackLocationById"
+            >
+              {{ locationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.taskCategory" for="field_taskCategory">Task Category</label>
+          <select class="form-control" id="field_taskCategory" data-cy="taskCategory" name="taskCategory" formControlName="taskCategory">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                taskCategoryOption.id === editForm.get('taskCategory')!.value?.id ? editForm.get('taskCategory')!.value : taskCategoryOption
+              "
+              *ngFor="let taskCategoryOption of taskCategoriesCollection; trackBy: trackTaskCategoryById"
+            >
+              {{ taskCategoryOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="taskateApp.task.taskers" for="field_taskers">Taskers</label>
+          <select class="form-control" id="field_taskers" data-cy="taskers" name="taskers" formControlName="taskers">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="taskerOption.id === editForm.get('taskers')!.value?.id ? editForm.get('taskers')!.value : taskerOption"
+              *ngFor="let taskerOption of taskersSharedCollection; trackBy: trackTaskerById"
+            >
+              {{ taskerOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "taskateApp": {
+    "LicenseStatus": {
+      "null": "",
+      "EXPIRED": "EXPIRED",
+      "VALID": "VALID"
+    }
+  }
+}
