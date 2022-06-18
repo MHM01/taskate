@@ -1,0 +1,104 @@
+<div>
+  <h2 id="page-heading" data-cy="TaskerHeading">
+    <span jhiTranslate="taskateApp.tasker.home.title">Taskers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="taskateApp.tasker.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-tasker"
+        [routerLink]="['/tasker/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="taskateApp.tasker.home.createLabel"> Create a new Tasker </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="taskers?.length === 0">
+    <span jhiTranslate="taskateApp.tasker.home.notFound">No taskers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="taskers && taskers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="firstName">
+            <span jhiTranslate="taskateApp.tasker.firstName">First Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="lastName">
+            <span jhiTranslate="taskateApp.tasker.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="email"><span jhiTranslate="taskateApp.tasker.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="phoneNumber">
+            <span jhiTranslate="taskateApp.tasker.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="subscribedAt">
+            <span jhiTranslate="taskateApp.tasker.subscribedAt">Subscribed At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="licenseStatus">
+            <span jhiTranslate="taskateApp.tasker.licenseStatus">License Status</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="address.id">
+            <span jhiTranslate="taskateApp.tasker.address">Address</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="taskCategories.id">
+            <span jhiTranslate="taskateApp.tasker.taskCategories">Task Categories</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let tasker of taskers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/tasker', tasker.id, 'view']">{{ tasker.id }}</a>
+          </td>
+          <td>{{ tasker.firstName }}</td>
+          <td>{{ tasker.lastName }}</td>
+          <td>{{ tasker.email }}</td>
+          <td>{{ tasker.phoneNumber }}</td>
+          <td>{{ tasker.subscribedAt | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'taskateApp.LicenseStatus.' + tasker.licenseStatus }}">{{ tasker.licenseStatus }}</td>
+          <td>
+            <div *ngIf="tasker.address">
+              <a [routerLink]="['/location', tasker.address?.id, 'view']">{{ tasker.address?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="tasker.taskCategories">
+              <a [routerLink]="['/task-category', tasker.taskCategories?.id, 'view']">{{ tasker.taskCategories?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/tasker', tasker.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/tasker', tasker.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(tasker)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

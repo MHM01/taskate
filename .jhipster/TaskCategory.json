@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20220618231033",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "task_category",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "TaskCategory",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tasker",
+      "otherEntityRelationshipName": "taskCategories",
+      "relationshipName": "tasker",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

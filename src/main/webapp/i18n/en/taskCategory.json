@@ -1,0 +1,26 @@
+{
+  "taskateApp": {
+    "taskCategory": {
+      "home": {
+        "title": "Task Categories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Task Category",
+        "createOrEditLabel": "Create or edit a Task Category",
+        "notFound": "No Task Categories found"
+      },
+      "created": "A new Task Category is created with identifier {{ param }}",
+      "updated": "A Task Category is updated with identifier {{ param }}",
+      "deleted": "A Task Category is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Task Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Task Category"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "tasker": "Tasker"
+    }
+  }
+}

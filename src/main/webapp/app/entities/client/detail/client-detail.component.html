@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="client">
+      <h2 data-cy="clientDetailsHeading"><span jhiTranslate="taskateApp.client.detail.title">Client</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ client.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ client.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ client.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.email">Email</span></dt>
+        <dd>
+          <span>{{ client.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ client.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.subscribedAt">Subscribed At</span></dt>
+        <dd>
+          <span>{{ client.subscribedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.licenseStatus">License Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'taskateApp.LicenseStatus.' + client.licenseStatus }}">{{ client.licenseStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.address">Address</span></dt>
+        <dd>
+          <div *ngIf="client.address">
+            <a [routerLink]="['/location', client.address?.id, 'view']">{{ client.address?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.client.tasks">Tasks</span></dt>
+        <dd>
+          <div *ngIf="client.tasks">
+            <a [routerLink]="['/task', client.tasks?.id, 'view']">{{ client.tasks?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/client', client.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

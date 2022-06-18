@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="task">
+      <h2 data-cy="taskDetailsHeading"><span jhiTranslate="taskateApp.task.detail.title">Task</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ task.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.title">Title</span></dt>
+        <dd>
+          <span>{{ task.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.description">Description</span></dt>
+        <dd>
+          <span>{{ task.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.numberOfTaskerRequired">Number Of Tasker Required</span></dt>
+        <dd>
+          <span>{{ task.numberOfTaskerRequired }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.budget">Budget</span></dt>
+        <dd>
+          <span>{{ task.budget }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ task.startDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'taskateApp.TaskStatus.' + task.status }}">{{ task.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.location">Location</span></dt>
+        <dd>
+          <div *ngIf="task.location">
+            <a [routerLink]="['/location', task.location?.id, 'view']">{{ task.location?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.taskCategory">Task Category</span></dt>
+        <dd>
+          <div *ngIf="task.taskCategory">
+            <a [routerLink]="['/task-category', task.taskCategory?.id, 'view']">{{ task.taskCategory?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.task.taskers">Taskers</span></dt>
+        <dd>
+          <div *ngIf="task.taskers">
+            <a [routerLink]="['/tasker', task.taskers?.id, 'view']">{{ task.taskers?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/task', task.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

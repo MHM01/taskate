@@ -1,0 +1,126 @@
+<div>
+  <h2 id="page-heading" data-cy="TaskHeading">
+    <span jhiTranslate="taskateApp.task.home.title">Tasks</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="taskateApp.task.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-task"
+        [routerLink]="['/task/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="taskateApp.task.home.createLabel"> Create a new Task </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="tasks?.length === 0">
+    <span jhiTranslate="taskateApp.task.home.notFound">No tasks found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="tasks && tasks.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="title"><span jhiTranslate="taskateApp.task.title">Title</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="taskateApp.task.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfTaskerRequired">
+            <span jhiTranslate="taskateApp.task.numberOfTaskerRequired">Number Of Tasker Required</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="budget"><span jhiTranslate="taskateApp.task.budget">Budget</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="startDate">
+            <span jhiTranslate="taskateApp.task.startDate">Start Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="status"><span jhiTranslate="taskateApp.task.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="location.id">
+            <span jhiTranslate="taskateApp.task.location">Location</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="taskCategory.id">
+            <span jhiTranslate="taskateApp.task.taskCategory">Task Category</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="taskers.id">
+            <span jhiTranslate="taskateApp.task.taskers">Taskers</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/task', task.id, 'view']">{{ task.id }}</a>
+          </td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.numberOfTaskerRequired }}</td>
+          <td>{{ task.budget }}</td>
+          <td>{{ task.startDate | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'taskateApp.TaskStatus.' + task.status }}">{{ task.status }}</td>
+          <td>
+            <div *ngIf="task.location">
+              <a [routerLink]="['/location', task.location?.id, 'view']">{{ task.location?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="task.taskCategory">
+              <a [routerLink]="['/task-category', task.taskCategory?.id, 'view']">{{ task.taskCategory?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="task.taskers">
+              <a [routerLink]="['/tasker', task.taskers?.id, 'view']">{{ task.taskers?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/task', task.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/task', task.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(task)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="tasks && tasks.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

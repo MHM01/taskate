@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20220618231038",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "client",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "subscribedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "licenseStatus",
+      "fieldType": "LicenseStatus",
+      "fieldValues": "EXPIRED,VALID"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "The Tasker entity.",
+  "jpaMetamodelFiltering": false,
+  "name": "Client",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "client",
+      "ownerSide": true,
+      "relationshipName": "address",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "client",
+      "relationshipName": "tasks",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

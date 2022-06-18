@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tasker">
+      <h2 data-cy="taskerDetailsHeading"><span jhiTranslate="taskateApp.tasker.detail.title">Tasker</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ tasker.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ tasker.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ tasker.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.email">Email</span></dt>
+        <dd>
+          <span>{{ tasker.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ tasker.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.subscribedAt">Subscribed At</span></dt>
+        <dd>
+          <span>{{ tasker.subscribedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.licenseStatus">License Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'taskateApp.LicenseStatus.' + tasker.licenseStatus }}">{{ tasker.licenseStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.address">Address</span></dt>
+        <dd>
+          <div *ngIf="tasker.address">
+            <a [routerLink]="['/location', tasker.address?.id, 'view']">{{ tasker.address?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="taskateApp.tasker.taskCategories">Task Categories</span></dt>
+        <dd>
+          <div *ngIf="tasker.taskCategories">
+            <a [routerLink]="['/task-category', tasker.taskCategories?.id, 'view']">{{ tasker.taskCategories?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tasker', tasker.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

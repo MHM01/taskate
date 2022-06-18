@@ -1,0 +1,68 @@
+{
+  "applications": "*",
+  "changelogDate": "20220618231032",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "task",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numberOfTaskerRequired",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "budget",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TaskStatus",
+      "fieldValues": "DONE,CANCELLED,WAITING_FOR_CANDIDATE,EXPIRED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Task",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "task",
+      "ownerSide": true,
+      "relationshipName": "location",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "taskCategory",
+      "otherEntityRelationshipName": "task",
+      "ownerSide": true,
+      "relationshipName": "taskCategory",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "client",
+      "otherEntityRelationshipName": "tasks",
+      "relationshipName": "client",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "tasker",
+      "otherEntityRelationshipName": "task",
+      "relationshipName": "taskers",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

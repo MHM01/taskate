@@ -48,6 +48,16 @@ public class CacheConfiguration {
             createCache(cm, com.mhm.taskate.domain.User.class.getName());
             createCache(cm, com.mhm.taskate.domain.Authority.class.getName());
             createCache(cm, com.mhm.taskate.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.mhm.taskate.domain.Task.class.getName());
+            createCache(cm, com.mhm.taskate.domain.Task.class.getName() + ".clients");
+            createCache(cm, com.mhm.taskate.domain.TaskCategory.class.getName());
+            createCache(cm, com.mhm.taskate.domain.TaskCategory.class.getName() + ".taskers");
+            createCache(cm, com.mhm.taskate.domain.Location.class.getName());
+            createCache(cm, com.mhm.taskate.domain.Region.class.getName());
+            createCache(cm, com.mhm.taskate.domain.Country.class.getName());
+            createCache(cm, com.mhm.taskate.domain.Tasker.class.getName());
+            createCache(cm, com.mhm.taskate.domain.Tasker.class.getName() + ".tasks");
+            createCache(cm, com.mhm.taskate.domain.Client.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

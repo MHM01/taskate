@@ -1,0 +1,32 @@
+{
+  "taskateApp": {
+    "tasker": {
+      "home": {
+        "title": "Taskers",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Tasker",
+        "createOrEditLabel": "Créer ou éditer un Tasker",
+        "notFound": "Aucun Tasker trouvé"
+      },
+      "created": "Un nouveau Tasker a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Tasker avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Tasker avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Tasker {{ id }} ?"
+      },
+      "detail": {
+        "title": "Tasker"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "subscribedAt": "Subscribed At",
+      "licenseStatus": "License Status",
+      "address": "Address",
+      "task": "Task",
+      "taskCategories": "Task Categories"
+    }
+  }
+}
